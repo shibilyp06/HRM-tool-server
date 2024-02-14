@@ -4,6 +4,29 @@ const {
   signupPost,
   otpVerification,
   loginPost,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 } = require("../controllers/adminController");
 
 router.post("/signupPost", signupPost);

@@ -33,19 +33,20 @@ const object = {
     }
   },
   loginPost: async (req, res) => {
-    try {
+    // try {
       const { email, password } = req.body;
-      const existingUser = await adminModel.findOne({ email,coparePassword });
+      const existingUser = await adminModel.findOne({ email });
       const storedPassword = existingUser.password
-      const coparePassword = await bcrypt.compare(password,storedPassword)
-      if (existingUser) {
+      const comparePassword = await bcrypt.compare(password,storedPassword)
+      if (existingUser && comparePassword) {
         res.status(200).json({ message: "Logged in successfuly" });
       } else {
         res.status(404).json({ message: "User not fount" });
       }
-    } catch {
-      res.status(400).json({ message: "Some error in login submit" });
-    }
+    // } catch {
+      
+    //   res.status(400).json({ message: "Some error in login submit" });
+    // }
   },
 };
 
