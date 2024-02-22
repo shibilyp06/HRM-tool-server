@@ -13,7 +13,7 @@ const object = {
   signupPost: async (req, res) => {
     try {
       const { name, email, password } = req.body;
-      const existingUser = await adminModel.findOne({ email: email });
+      const existingUser = await adminModel.findOne({ email });
       // bcrypting password
       const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -56,7 +56,7 @@ const object = {
       const comparePassword = await bcrypt.compare(password, storedPassword);
       // Generating JWT token
       const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
-        expiresIn: "1h",
+        expiresIn: 60*5,
       });
 
       if (existingUser && comparePassword) {
@@ -73,18 +73,12 @@ const object = {
     try {
       const { name, email, position, dob, phoneNumber } = req.body;
       const existingUser = await StaffModel.findOne({ email: email });
-
       // Creating  password
-      const password =
-        name.split("")[0] +
-        name.split("")[1] +
-        name.split("")[2] +
-        dob.split("-")[0].split("")[2] +
-        dob.split("-")[0].split("")[3] +
-        dob.split("-")[2];
+      console.log("hi");
+      const password = name.slice(0, 3) + dob.slice(2, 4) + dob.split("-")[2];
       // const password =
       const hashedPassword = await bcrypt.hash(password, 10);
-
+      console.log(password);
       // Saving Staff
       if (!existingUser) {
         const staffData = await new StaffModel({
@@ -95,7 +89,6 @@ const object = {
           phoneNumber: phoneNumber,
           password: hashedPassword,
         }).save();
-
         res.status(200).json({ message: "Data saved successfully" });
       } else {
         res.status(400).json({ message: "User already exist" });
@@ -103,6 +96,21 @@ const object = {
     } catch {
       res.status(400).json({ message: "Found some error in saving Staff" });
     }
+  },
+  getStaff: async (req, res) => {
+    try {
+      const allStaff = await StaffModel.find();
+      res.status(200).json({ message: "Data send to frontend", allStaff });
+    } catch {
+      res.status(400).json({ message: "Fetching error" });
+    }
+  },
+  editStaff: async (req, res) => {
+    console.log("kooijj");
+    const Id = req.params.Id;
+    console.log(Id);
+    const editingStaff = await StaffModel.findOne({ _id: Id });
+    console.log(editingStaff, " kiity");
   },
 };
 
