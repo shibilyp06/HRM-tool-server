@@ -10,13 +10,16 @@ const {
   addstaff,
   getStaff,
   editStaff,
+  deleteStaff,
 } = require("../controllers/adminController");
+// const verifyToken = require("../Middleware/jwtVerification");
 
 router.post("/signupPost", signupPost);
 router.post("/otpVerification", otpVerification);
 router.post("/loginPost", loginPost);
 router.post("/addStaff", addstaff);
 router.get("/getStaff", getStaff);
-router.get("/editStaff/:Id", editStaff);
+router.put("/editStaff/:Id", editStaff);
+router.post("/deleteStaff/:Id", deleteStaff);
 
 module.exports = router;

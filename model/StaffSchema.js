@@ -1,5 +1,6 @@
+/* eslint-disable quotes */
 /* eslint-disable new-cap */
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const StaffSchema = mongoose.Schema({
   name: {
     type: String,
@@ -25,6 +26,14 @@ const StaffSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  deleteStatus: {
+    type: Boolean,
+    require: true,
+  },
+  roles: {
+    type: Array,
+    require: true,
+  },
 });
-const StaffModel = mongoose.model('Staff', StaffSchema);
+const StaffModel = mongoose.model("Staff", StaffSchema);
 module.exports = StaffModel;

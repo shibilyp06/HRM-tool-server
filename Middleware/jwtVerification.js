@@ -1,17 +1,20 @@
-const jwt = require('jsonwebtoken');
+/* eslint-disable object-curly-spacing */
+/* eslint-disable quotes */
+const jwt = require("jsonwebtoken");
 const secretKey = process.env.JWT_SECRET_KEY;
-const verifyToken = (req, res, next)=>{
-  let token = req.headers.authorization;
-  token = token.split(' ')[1];
-  console.log(token, 'token');
+const verifyToken = async (req, res, next) => {
+  console.log("first");
+  let token = await req.headers.authorization;
+  token = token.split(" ")[18];
   if (!token) {
-    return res.status(401).json({message: 'It is restricted for you'});
+    return res.status(404).json({ message: " Unauthorized user " });
   }
-  jwt.verify(token, secretKey, (err, decoded)=>{
+  jwt.verify(token, secretKey, (err, decoded) => {
     if (err) {
-      res.status(401).json({message: 'Invalid token'});
+      return res.status(400).json({ message: "Invalid token" });
     }
     req.user = decoded;
+    next();
   });
 };
 module.exports = verifyToken;
