@@ -2,7 +2,7 @@
 /* eslint-disable quotes */
 /* eslint-disable object-curly-spacing */
 
-const StaffModel = require("../model/StaffSchema");
+const staffModel = require("../model/StaffSchema");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const adminModel = require("../model/adminSchema");
@@ -18,7 +18,7 @@ const object = {
       // eslint-disable-next-line object-curly-spacing
       const existingUser =
         (await adminModel.findOne({ email: email })) ||
-        (await StafsfModel.findOne({ email }));
+        (await staffModel.findOne({ email }));
       if (!existingUser) {
         return res.status(401).json({ error: "This email dosn't exist " });
       }

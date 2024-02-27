@@ -6,7 +6,6 @@ const router = express.Router();
 const {
   signupPost,
   otpVerification,
-  loginPost,
   addstaff,
   getStaff,
   editStaff,
@@ -17,7 +16,6 @@ const {
 
 router.post("/signupPost", signupPost);
 router.post("/otpVerification", otpVerification);
-router.post("/loginPost", loginPost);
 router.post("/addStaff", addstaff);
 router.get("/getStaff", getStaff);
 router.put("/editStaff/:Id", editStaff);

@@ -46,37 +46,6 @@ const object = {
       res.status(400).json({ message: " Some error in otp verification " });
     }
   },
-
-  loginPost: async (req, res) => {
-    try {
-      const { email, password, role } = req.body;
-      console.log(req.body, "body");
-      const payload = req.body.email;
-      // Checking if user exist or not
-      const existingUser = await adminModel.findOne({ email: email });
-      if (!existingUser) {
-        return res.status(404).json({ error: "Wrong admin details" });
-      }
-      const storedPassword = existingUser.password;
-      const comparePassword = await bcrypt.compare(password, storedPassword);
-      // Generating JWT token
-      if (role == "Admin") {
-        if (existingUser && comparePassword) {
-          const token = jwt.sign({ payload }, process.env.JWT_SECRET_KEY, {
-            expiresIn: "1h",
-          });
-          res.status(200).json({ message: "Logged in successfuly", token });
-        } else {
-          res.status(404).json({ erroe: "User not found" });
-        }
-      } else {
-        res.status(404).json({ err: "You are not admin" });
-      }
-    } catch {
-      // eslint-disable-next-line quotes
-      res.status(400).json({ message: "Some error in login submit" });
-    }
-  },
   addstaff: async (req, res) => {
     try {
     console.log("second");
@@ -143,7 +112,7 @@ const object = {
       await StaffModel.findByIdAndUpdate(
         Id,
         { deleteStatus: true },
-        { new: true }
+        { new: true },
       );
       const staffs = await StaffModel.find({ deleteStatus: false });
       res.status(200).json({ message: "staff deleted successfuly", staffs });

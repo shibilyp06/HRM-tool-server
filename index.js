@@ -17,8 +17,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use("/", commonRouter);
-// app.use("/staff", staffRouter);
+app.use("/staff", staffRouter);
 app.use("/admin", adminRouter);
+
 
 app.listen(port, () => {
   console.log("server is connected");
