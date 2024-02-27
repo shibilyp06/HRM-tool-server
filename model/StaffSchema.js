@@ -30,6 +30,10 @@ const StaffSchema = mongoose.Schema({
     type: Boolean,
     require: true,
   },
+  role: {
+    type: String,
+    required: true,
+  },
   roles: {
     type: Array,
     require: true,

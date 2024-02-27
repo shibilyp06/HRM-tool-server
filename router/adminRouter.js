@@ -11,6 +11,7 @@ const {
   getStaff,
   editStaff,
   deleteStaff,
+  updateStaff,
 } = require("../controllers/adminController");
 // const verifyToken = require("../Middleware/jwtVerification");
 
@@ -21,5 +22,6 @@ router.post("/addStaff", addstaff);
 router.get("/getStaff", getStaff);
 router.put("/editStaff/:Id", editStaff);
 router.post("/deleteStaff/:Id", deleteStaff);
+router.put("/updateStaff", updateStaff);
 
 module.exports = router;
