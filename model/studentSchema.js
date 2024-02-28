@@ -1,5 +1,4 @@
 /* eslint-disable quotes */
-const { url } = require("inspector");
 const mongoose = require("mongoose");
 const StudentSchema = new mongoose.Schema({
   name: {
