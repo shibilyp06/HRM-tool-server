@@ -4,10 +4,11 @@
 /* eslint-disable quotes */
 const express = require("express");
 const router = express.Router();
+const { upload, s3 } = require("../utility/multer");
 
-const { addStudent } = require("../controllers/staffController");
+const { addStudent, getStudents } = require("../controllers/staffController");
 
-router.post("/addStudent", addStudent);
+router.post("/addStudent", upload.single("imgURL"), addStudent);
+router.get("/getStudents", getStudents);
 
 module.exports = router;
-

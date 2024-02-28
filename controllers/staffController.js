@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable quotes */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable no-unused-vars */
@@ -5,7 +6,7 @@ const StudentModel = require("../model/studentSchema");
 const bcrypt = require("bcryptjs");
 const object = {
   addStudent: async (req, res) => {
-    // try {
+    try {
     const { name, email, course, dob, phoneNumber, imgURL } = req.body;
     console.log(imgURL, "llo");
     const existingUser = await StudentModel.findOne({ email: email });
@@ -27,16 +28,24 @@ const object = {
         imgURL: imgURL,
         role: "Student",
       }).save();
-      console.log(req.body, " maaraar ");
       res.status(200).json({ message: "Data saved successfully" });
     } else {
       res.status(400).json({ message: "User already exist" });
     }
-    // } catch {
-    //   res.status(400).json({ message:
-    //  "Found some error in saving student" });
-    // }
+    } catch {
+      res.status(400).json({ message:
+     "Found some error in saving student" });
+    }
   },
-  
+  getStudents: async (req, res) => {
+    try {
+      const students = await StudentModel.find({ deleteStatus: false });
+      res
+        .status(200)
+        .json({ message: "collected data from database", students });
+    } catch (err) {
+      res.status(400).json({ err });
+    }
+  },
 };
 module.exports = object;
