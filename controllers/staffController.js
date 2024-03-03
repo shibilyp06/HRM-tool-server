@@ -5,6 +5,7 @@
 const { error } = require("console");
 const StudentModel = require("../model/studentSchema");
 const bcrypt = require("bcryptjs");
+const StaffModel = require("../model/StaffSchema");
 const object = {
   addStudent: async (req, res) => {
     try {
@@ -79,6 +80,22 @@ const object = {
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: "Internal server error" });
+    }
+  },
+  deleteStudent: async (req, res) => {
+    try {
+      const { Id } = req.params;
+      console.log(Id);
+      await StudentModel.findByIdAndUpdate(
+        Id,
+        { deleteStatus: true },
+        { new: true }
+      );
+      const staffs = await StaffModel.find({ deleteStatus: false });
+      res.status(200).json({ message: "staff deleted successfuly", staffs });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Internal server error" });
     }
   },
 };
