@@ -1,7 +1,7 @@
 /* eslint-disable quotes */
 /* eslint-disable new-cap */
 const mongoose = require("mongoose");
-const StaffSchema = mongoose.Schema({
+const StaffSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -38,6 +38,10 @@ const StaffSchema = mongoose.Schema({
     type: Array,
     require: true,
   },
+  imgURL: {
+    type: String,
+    required: true,
+  },
 });
-const StaffModel = mongoose.model("Staff", StaffSchema);
+const StaffModel = new mongoose.model("Staff", StaffSchema);
 module.exports = StaffModel;

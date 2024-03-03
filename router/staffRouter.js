@@ -6,9 +6,16 @@ const express = require("express");
 const router = express.Router();
 const { upload, s3 } = require("../utility/multer");
 
-const { addStudent, getStudents } = require("../controllers/staffController");
+const {
+  addStudent,
+  getStudents,
+  editStudent,
+  updateStudent,
+} = require("../controllers/staffController");
 
 router.post("/addStudent", upload.single("imgURL"), addStudent);
 router.get("/getStudents", getStudents);
+router.get("/editStudent/:Id", editStudent);
+router.put("/updateStudent", updateStudent);
 
 module.exports = router;

@@ -48,42 +48,37 @@ const object = {
   },
   addstaff: async (req, res) => {
     try {
-    console.log("second");
-    const {
-      name,
-      email,
-      position,
-      dob,
-      phoneNumber,
-      deleteStatus,
-      role,
-      roles,
-    } = req.body;
-    const existingUser = await StaffModel.findOne({ email: email });
-    // Creating  password for staff
-    const password = name.slice(0, 3) + dob.slice(2, 4) + dob.split("-")[2];
-    console.log(password, "before");
-    const hashedPassword = await bcrypt.hash(password, 10);
-    console.log(hashedPassword, "after");
-    // Saving Staff
-    if (!existingUser) {
-      const staffData = await new StaffModel({
-        name: name,
-        email: email,
-        position: position,
-        dob: dob,
-        phoneNumber: phoneNumber,
-        password: hashedPassword,
-        deleteStatus: false,
-        role: "Staff",
-        roles: [],
-      }).save();
-      res.status(200).json({ message: "Data saved successfully" });
-    } else {
-      res.status(400).json({ message: "User already exist" });
-    }
-    } catch {
-    res.status(400).json({ message: "Found some error in saving Staff" });
+      console.log("second");
+      const { name, email, position, dob, phoneNumber } = req.body;
+      const imgURL = req.file.location;
+      console.log(imgURL, "image frombackend");
+      const existingUser = await StaffModel.findOne({ email: email });
+      // Creating  password for staff
+      const password = name.slice(0, 3) + dob.slice(2, 4) + dob.split("-")[2];
+      console.log(password, "before");
+      const hashedPassword = await bcrypt.hash(password, 10);
+      console.log(hashedPassword, "after");
+      // Saving Staff
+      if (!existingUser) {
+        const staffData = await new StaffModel({
+          name: name,
+          email: email,
+          position: position,
+          dob: dob,
+          phoneNumber: phoneNumber,
+          password: hashedPassword,
+          deleteStatus: false,
+          role: "Staff",
+          roles: [],
+          imgURL: imgURL,
+        }).save();
+        res.status(200).json({ message: "Data saved successfully" });
+      } else {
+        res.status(400).json({ message: "User already exist" });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(400).json({ message: "Found some error in saving Staff" });
     }
   },
   getStaff: async (req, res) => {
@@ -112,7 +107,7 @@ const object = {
       await StaffModel.findByIdAndUpdate(
         Id,
         { deleteStatus: true },
-        { new: true },
+        { new: true }
       );
       const staffs = await StaffModel.find({ deleteStatus: false });
       res.status(200).json({ message: "staff deleted successfuly", staffs });
@@ -122,7 +117,24 @@ const object = {
   },
   updateStaff: async (req, res) => {
     const { name, email, position, dob, phoneNumber } = req.body;
-    console.log(req.body, "body");
+    const userId = await StaffModel.findOne({ email });
+    try {
+      const updateStaff = await StaffModel.findByIdAndUpdate(
+        userId._id,
+        {
+          name: name,
+          email: email,
+          position: position,
+          dob: dob,
+          phoneNumber: phoneNumber,
+        },
+        { new: true }
+      );
+      res.status(200).json({ message: "Staff data updated successfuly" });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+    }
   },
 };
 

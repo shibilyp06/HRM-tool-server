@@ -17,6 +17,8 @@ const s3 = new S3Client({
     secretAccessKey: secretAccessKey,
   },
 });
+console.log("reached multer");
+
 const upload = multer({
   storage: multerS3({
     s3,
@@ -25,7 +27,7 @@ const upload = multer({
       cb(null, { fieldName: file.fieldname });
     },
     key: function (req, file, cb) {
-      cb(null, Date.now().toString());
+      cb(null, `image-${Date.now()}.img`);
     },
   }),
 });
