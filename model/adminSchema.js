@@ -1,7 +1,7 @@
 /* eslint-disable quotes */
 /* eslint-disable new-cap */
 const mongoose = require("mongoose");
-const adminSchema = new mongoose.Schema({
+const AdminSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -19,5 +19,5 @@ const adminSchema = new mongoose.Schema({
     required: true,
   },
 });
-const adminModel = new mongoose.model("Admin", adminSchema);
-module.exports = adminModel;
+const AdminModel = new mongoose.model("Admin", AdminSchema);
+module.exports = AdminModel;

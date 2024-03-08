@@ -27,7 +27,7 @@ const object = {
       // Generating JWT token
       if (existingUser && comparePassword) {
         const token = jwt.sign({ payload }, process.env.JWT_SECRET_KEY, {
-          expiresIn: "1h",
+          expiresIn: "1d",
         });
         res.status(200).json({
           message: "Logged in successfuly",
