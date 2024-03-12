@@ -2,10 +2,11 @@
 /* eslint-disable quotes */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable no-unused-vars */
-const StudentModel = require("../model/studentSchema");
+const StudentModel = require("../models/studentSchema");
 const bcrypt = require("bcryptjs");
-const StaffModel = require("../model/StaffSchema");
-const AdminModel = require("../model/adminSchema");
+const StaffModel = require("../models/StaffSchema");
+const AdminModel = require("../models/adminSchema");
+const { log } = require("console");
 const object = {
   addStudent: async (req, res) => {
     try {
@@ -15,7 +16,7 @@ const object = {
       // Creating  password for staff
 
       const password = name.slice(0, 3) + dob.slice(2, 4) + dob.split("-")[2];
-
+       console.log(password);
       const hashedPassword = await bcrypt.hash(password, 10);
       console.log(" finally ");
       // Saving Staff
@@ -42,9 +43,7 @@ const object = {
   },
   getStudents: async (req, res) => {
     try {
-      console.log(req.user, " decoded");
       const payload = req.user;
-      console.log(payload, "payload");
       const students = await StudentModel.find({ deleteStatus: false });
       res.status(200).json({
         message: "collected data from database",
@@ -107,11 +106,23 @@ const object = {
   },
   getAdmin: async (req, res) => {
     try {
+      console.log(" reached here ");
       const admin = await AdminModel.find();
       res.status(200).json({ message: "Got Admins", admin });
     } catch (err) {
       console.log(err);
       res.status(500).json({ err: "Internal server error" });
+    }
+  },
+  getMe: async (req, res) => {
+    try {
+      const { emailId } = req.params;
+      console.log(emailId, "staff email");
+      const staff = await StaffModel.findOne({ email: emailId });
+      res.status(200).json({ message: "data send successfuly", staff });
+    } catch (err) {
+      console.error(err);
+      res.status(5000).json({ error: err });
     }
   },
 };

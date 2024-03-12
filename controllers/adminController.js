@@ -3,11 +3,11 @@
 /* eslint-disable quotes */
 /* eslint-disable no-unused-vars */
 /* eslint-disable new-cap */
-const adminModel = require("../model/adminSchema");
+const adminModel = require("../models/adminSchema");
 const bcrypt = require("bcryptjs");
 const twilio = require("../utility/twilio");
 const jwt = require("jsonwebtoken");
-const StaffModel = require("../model/StaffSchema");
+const StaffModel = require("../models/StaffSchema");
 
 const object = {
   // signup form logic
@@ -91,11 +91,17 @@ const object = {
   },
   editStaff: async (req, res) => {
     try {
+      const { user } = req;
+      console.log(user, " : Admin Email");
       const Id = req.params.Id;
       const editingStaff = await StaffModel.findOne({ _id: Id });
       res
         .status(200)
-        .json({ message: "response send successfully", editingStaff });
+        .json({
+          message: "response send successfully",
+          editingStaff,
+          adminEmail: user.payload,
+        });
     } catch {
       res.status(500).json({ error: "Internal server error" });
     }

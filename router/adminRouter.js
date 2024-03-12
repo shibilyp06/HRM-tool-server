@@ -13,13 +13,13 @@ const {
   deleteStaff,
   updateStaff,
 } = require("../controllers/adminController");
-// const verifyToken = require("../Middleware/jwtVerification");
+const jwtMiddleware = require("../Middleware/jwtVerification");
 
 router.post("/signupPost", signupPost);
 router.post("/otpVerification", otpVerification);
 router.post("/addStaff", upload.single("imgURL"), addstaff);
 router.get("/getStaff", getStaff);
-router.put("/editStaff/:Id", editStaff);
+router.put("/editStaff/:Id", jwtMiddleware, editStaff);
 router.post("/deleteStaff/:Id", deleteStaff);
 router.put("/updateStaff", updateStaff);
 

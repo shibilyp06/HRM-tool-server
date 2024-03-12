@@ -13,6 +13,7 @@ const {
   updateStudent,
   deleteStudent,
   getAdmin,
+  getMe,
 } = require("../controllers/staffController");
 
 router.post("/addStudent", upload.single("imgURL"), addStudent);
@@ -21,5 +22,6 @@ router.get("/editStudent/:Id", editStudent);
 router.put("/updateStudent", updateStudent);
 router.patch("/deleteStudent/:Id", deleteStudent);
 router.get("/getAdmin", getAdmin);
+router.get("/getMe/:emailId", getMe);
 
 module.exports = router;
