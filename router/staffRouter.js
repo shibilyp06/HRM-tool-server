@@ -22,6 +22,6 @@ router.get("/editStudent/:Id", editStudent);
 router.put("/updateStudent", updateStudent);
 router.patch("/deleteStudent/:Id", deleteStudent);
 router.get("/getAdmin", getAdmin);
-router.get("/getMe/:emailI", getMe);
+router.get("/getMe/:emailId", getMe);
 
 module.exports = router;

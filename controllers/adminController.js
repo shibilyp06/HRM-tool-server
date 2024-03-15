@@ -8,6 +8,7 @@ const bcrypt = require("bcryptjs");
 const twilio = require("../utility/twilio");
 const jwt = require("jsonwebtoken");
 const StaffModel = require("../models/StaffSchema");
+const { all } = require("../router/adminRouter");
 
 const object = {
   // signup form logic
@@ -83,8 +84,12 @@ const object = {
   },
   getStaff: async (req, res) => {
     try {
+      const studentEmail = req.user.payload;
+      console.log(studentEmail, " : student Email");
       const allStaff = await StaffModel.find({ deleteStatus: false });
-      res.status(200).json({ message: "Data send to frontend", allStaff });
+      res
+        .status(200)
+        .json({ message: "Data send to frontend", allStaff, studentEmail });
     } catch {
       res.status(400).json({ message: "Fetching error" });
     }
@@ -95,13 +100,11 @@ const object = {
       console.log(user, " : Admin Email");
       const Id = req.params.Id;
       const editingStaff = await StaffModel.findOne({ _id: Id });
-      res
-        .status(200)
-        .json({
-          message: "response send successfully",
-          editingStaff,
-          adminEmail: user.payload,
-        });
+      res.status(200).json({
+        message: "response send successfully",
+        editingStaff,
+        adminEmail: user.payload,
+      });
     } catch {
       res.status(500).json({ error: "Internal server error" });
     }

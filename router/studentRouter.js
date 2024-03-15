@@ -4,7 +4,11 @@
 const express = require("express");
 const router = express.Router();
 
-const { createOrder } = require("../controllers/studentController");
+const {
+  createOrder,
+  getCurrentStudent,
+} = require("../controllers/studentController");
 router.post("/createOrder", createOrder);
+router.get("/getCurrentStudent", getCurrentStudent);
 
 module.exports = router;
