@@ -14,6 +14,7 @@ const {
   deleteStudent,
   getAdmin,
   getMe,
+  addCourse,
 } = require("../controllers/staffController");
 
 router.post("/addStudent", upload.single("imgURL"), addStudent);
@@ -23,5 +24,6 @@ router.put("/updateStudent", updateStudent);
 router.patch("/deleteStudent/:Id", deleteStudent);
 router.get("/getAdmin", getAdmin);
 router.get("/getMe/:emailId", getMe);
+router.post("/addCourse", addCourse);
 
 module.exports = router;

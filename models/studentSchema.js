@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 /* eslint-disable quotes */
 const mongoose = require("mongoose");
 const StudentSchema = new mongoose.Schema({
@@ -38,5 +39,5 @@ const StudentSchema = new mongoose.Schema({
     required: true,
   },
 });
-const StudentModel = mongoose.model("Student", StudentSchema);
+const StudentModel = new mongoose.model("Student", StudentSchema);
 module.exports = StudentModel;

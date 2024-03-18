@@ -7,6 +7,7 @@ const bcrypt = require("bcryptjs");
 const StaffModel = require("../models/StaffSchema");
 const AdminModel = require("../models/adminSchema");
 const { log } = require("console");
+const courseModel = require("../models/courseSchema");
 const object = {
   addStudent: async (req, res) => {
     try {
@@ -16,7 +17,7 @@ const object = {
       // Creating  password for staff
 
       const password = name.slice(0, 3) + dob.slice(2, 4) + dob.split("-")[2];
-       console.log(password);
+      console.log(password);
       const hashedPassword = await bcrypt.hash(password, 10);
       console.log(" finally ");
       // Saving Staff
@@ -123,6 +124,21 @@ const object = {
     } catch (err) {
       console.error(err);
       res.status(5000).json({ error: err });
+    }
+  },
+  addCourse: async (req, res) => {
+    const { courseName, duration, description, topics } = req.body;
+    console.log(req.body, " : course Data");
+    try {
+      const courseDetails = await courseModel({
+        courseName: courseName,
+        duration: duration,
+        description: description,
+        topics: topics,
+      });
+      await courseDetails.save();
+    } catch (err) {
+      console.error(err);
     }
   },
 };

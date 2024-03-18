@@ -15,6 +15,7 @@ const object = {
       res.status(5000).json({ error: err });
     }
   },
+  studentAttendance: async (req, res) => {},
 };
 
 module.exports = object;

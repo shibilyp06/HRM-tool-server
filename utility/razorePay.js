@@ -10,7 +10,7 @@ const razorPay = new Razorepay({
 
 const createOrder = async (req, res) => {
   const options = {
-    amount: 5000,
+    amount: 500000,
     currency: "INR",
   };
   try {
@@ -20,6 +20,6 @@ const createOrder = async (req, res) => {
     console.log(err);
     res.status(500).json({ err });
   }
-};
+}
 
 module.exports = createOrder;

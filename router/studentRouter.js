@@ -7,8 +7,10 @@ const router = express.Router();
 const {
   createOrder,
   getCurrentStudent,
+  studentAttendance,
 } = require("../controllers/studentController");
 router.post("/createOrder", createOrder);
-router.get("/getCurrentStudent", getCurrentStudent);
+router.get("/getCurrentStudent/:emailId", getCurrentStudent);
+router.post("/attendance", studentAttendance);
 
 module.exports = router;
