@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 /* eslint-disable quotes */
 const mongoose = require("mongoose");
 
@@ -6,13 +7,14 @@ const attendanceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  imgURL: {
-    type: String,
+  attendance: {
+    type: Boolean,
     required: true,
   },
+
   location: {
     type: String,
-    required: true,
+    required: false,
   },
   date: {
     type: Date,
@@ -20,4 +22,4 @@ const attendanceSchema = new mongoose.Schema({
     required: true,
   },
 });
-module.exports = new mongoose.Model("attendance", attendanceSchema);
+module.exports = new mongoose.model("attendance", attendanceSchema);

@@ -10,7 +10,7 @@ const {
   studentAttendance,
 } = require("../controllers/studentController");
 router.post("/createOrder", jwtMiiddleware, createOrder);
-router.post("/attendance", studentAttendance);
+router.post("/attendance", jwtMiiddleware, studentAttendance);
 router.get("/getCurrentStudent", jwtMiiddleware, getCurrentStudent);
 
 module.exports = router;
