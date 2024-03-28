@@ -15,6 +15,7 @@ const {
   getAdmin,
   getMe,
   addCourse,
+  addEvents,
 } = require("../controllers/staffController");
 
 router.post("/addStudent", upload.single("imgURL"), addStudent);
@@ -25,5 +26,6 @@ router.patch("/deleteStudent/:Id", deleteStudent);
 router.get("/getAdmin", getAdmin);
 router.get("/getMe/:emailId", getMe);
 router.post("/addCourse", addCourse);
+router.post("/addEvents", addEvents);
 
 module.exports = router;

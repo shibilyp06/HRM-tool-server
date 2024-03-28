@@ -6,8 +6,8 @@ const StudentModel = require("../models/studentSchema");
 const bcrypt = require("bcryptjs");
 const StaffModel = require("../models/StaffSchema");
 const AdminModel = require("../models/adminSchema");
-const { log } = require("console");
 const courseModel = require("../models/courseSchema");
+const eventModel = require("../models/eventSchema");
 const object = {
   addStudent: async (req, res) => {
     try {
@@ -137,6 +137,22 @@ const object = {
         topics: topics,
       });
       await courseDetails.save();
+    } catch (err) {
+      console.error(err);
+    }
+  },
+  addEvents: async (req, res) => {
+    const { date, eventName, eventDescription, programs } = req.body;
+    console.log(req.body, " : bidy");
+    try {
+      const saveEvent = await eventModel({
+        date,
+        eventName,
+        eventDescription,
+        programs,
+      });
+      await saveEvent.save();
+      res.status(200).json({ message: "Event saved successfully" });
     } catch (err) {
       console.error(err);
     }
