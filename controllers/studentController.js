@@ -6,6 +6,7 @@ const officeLOcationModel = require("../models/officeLocationModel");
 const StudentModel = require("../models/studentSchema");
 const createOrder = require("../utility/razorePay");
 const eventModel = require("../models/eventSchema");
+const announcementModel = require("../models/announcementSchema");
 const object = {
   createOrder: createOrder,
   studentAttendance: async (req, res) => {
@@ -65,8 +66,10 @@ const object = {
   getEvents: async (req, res) => {
     try {
       const events = await eventModel.find();
-      console.log(events, " : events");
-      res.status(200).json({ events, message: "Events send successfully" });
+      const announcements = await announcementModel.find();
+      res
+        .status(200)
+        .json({ events, announcements, message: "Events send successfully" });
     } catch (err) {
       console.error(err);
     }

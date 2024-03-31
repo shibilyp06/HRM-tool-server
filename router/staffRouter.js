@@ -16,6 +16,8 @@ const {
   getMe,
   addCourse,
   addEvents,
+  addAnnouncement,
+  deleteEvent,
 } = require("../controllers/staffController");
 
 router.post("/addStudent", upload.single("imgURL"), addStudent);
@@ -27,5 +29,7 @@ router.get("/getAdmin", getAdmin);
 router.get("/getMe/:emailId", getMe);
 router.post("/addCourse", addCourse);
 router.post("/addEvents", addEvents);
+router.post("/addAnnouncement", addAnnouncement);
+router.delete("/deleteEvent/:Id", deleteEvent);
 
 module.exports = router;

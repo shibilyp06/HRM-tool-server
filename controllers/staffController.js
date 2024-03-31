@@ -8,6 +8,7 @@ const StaffModel = require("../models/StaffSchema");
 const AdminModel = require("../models/adminSchema");
 const courseModel = require("../models/courseSchema");
 const eventModel = require("../models/eventSchema");
+const announcementModel = require("../models/announcementSchema");
 const object = {
   addStudent: async (req, res) => {
     try {
@@ -153,6 +154,36 @@ const object = {
       });
       await saveEvent.save();
       res.status(200).json({ message: "Event saved successfully" });
+    } catch (err) {
+      console.error(err);
+    }
+  },
+  addAnnouncement: async (req, res) => {
+    console.log(req.body);
+    const { title, content, expiryTime } = req.body;
+    try {
+      const announcements = await announcementModel({
+        title,
+        content,
+        expiryTime,
+      });
+      await announcements.save();
+
+      res
+        .status(200)
+        .json({ message: "Announcement saved successfully in  database" });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json(err);
+    }
+  },
+  deleteEvent: async (req, res) => {
+    const { Id } = req.params;
+    try {
+      const deleteEvent = await eventModel.findByIdAndDelete({ _id: Id });
+      const events = await eventModel.find();
+      console.log(deleteEvent, " : event deleted ");
+      res.status(200).json({ message: "Event deleted successfully", events });
     } catch (err) {
       console.error(err);
     }
