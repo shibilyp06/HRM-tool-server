@@ -179,11 +179,17 @@ const object = {
   },
   deleteEvent: async (req, res) => {
     const { Id } = req.params;
+    console.log(Id, " : Id");
     try {
-      const deleteEvent = await eventModel.findByIdAndDelete({ _id: Id });
+      const deleteEvent =
+        (await eventModel.findByIdAndDelete({ _id: Id })) ||
+        (await announcementModel.findByIdAndDelete({ _id: Id }));
       const events = await eventModel.find();
+      const announcements = await announcementModel.find();
       console.log(deleteEvent, " : event deleted ");
-      res.status(200).json({ message: "Event deleted successfully", events });
+      res
+        .status(200)
+        .json({ message: "Event deleted successfully", events, announcements });
     } catch (err) {
       console.error(err);
     }
