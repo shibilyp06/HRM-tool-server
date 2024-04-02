@@ -4,7 +4,8 @@
 const express = require("express");
 const router = express.Router();
 
-const { loginPost } = require("../controllers/commonController");
+const { loginPost, getAllUsers } = require("../controllers/commonController");
 
 router.post("/loginPost", loginPost);
+router.get("/searchQuery", getAllUsers);
 module.exports = router;

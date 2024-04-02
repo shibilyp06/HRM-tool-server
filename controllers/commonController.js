@@ -7,8 +7,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const adminModel = require("../models/adminSchema");
 const StudentModel = require("../models/studentSchema");
+const StaffModel = require("../models/StaffSchema");
 
-/* eslint-disable quotes */
 const object = {
   loginPost: async (req, res) => {
     try {
@@ -28,7 +28,7 @@ const object = {
       const comparePassword = await bcrypt.compare(password, storedPassword);
       console.log(comparePassword);
       // Generating JWT token
-      if ( comparePassword) {
+      if (comparePassword) {
         const token = jwt.sign({ payload }, process.env.JWT_SECRET_KEY, {
           expiresIn: "1d",
         });
@@ -43,6 +43,19 @@ const object = {
     } catch {
       // eslint-disable-next-line quotes
       res.status(400).json({ message: "Some error in login submit" });
+    }
+  },
+  getAllUsers: async (req, res) => {
+    try {
+      const { searchQuery } = req.query;
+
+      const regex = new RegExp(searchQuery, "i");
+      const allStaff = await StaffModel.find({ name: regex });
+      const allStudent = await StudentModel.find({ name: regex });
+      res.status(200).json({ allStaff, allStudent });
+    } catch (err) {
+      console.error(err);
+      res.status(400).json({ err });
     }
   },
 };
